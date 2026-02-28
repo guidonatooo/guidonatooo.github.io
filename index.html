@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guilherme Donato — Senior Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --navy-mid: #132034;
+      --navy-light: #1a2d45;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --muted: #8a9bb0;
+      --accent-line: rgba(201,168,76,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 5vw;
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--accent-line);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 5vw;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated diagonal accent */
+    #hero::after {
+      content: '';
+      position: absolute;
+      right: -10%;
+      top: 10%;
+      width: 55%;
+      height: 90%;
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+      border-left: 1px solid var(--accent-line);
+      transform: skewX(-6deg);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.07;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    h1 span { color: var(--gold); }
+
+    .hero-title {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .hero-bio {
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: #b8c9dc;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.75rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid var(--accent-line);
+      color: var(--cream);
+      padding: 0.75rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gold);
+    }
+
+    .stat-card:hover { transform: translateX(6px); background: rgba(255,255,255,0.07); }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 6rem 5vw;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 3rem;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--navy-mid); }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      max-width: 860px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--accent-line);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .timeline-dot {
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--navy-mid);
+      border: 2px solid var(--gold);
+      position: relative;
+      top: 4px;
+      flex-shrink: 0;
+    }
+
+    .timeline-body {}
+
+    .job-company {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .job-role {
+      font-size: 0.88rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .job-period {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .job-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .job-bullets li {
+      font-size: 0.93rem;
+      color: #b0c4d8;
+      line-height: 1.65;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .job-bullets li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.5rem;
+      top: 6px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 1.6rem;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .skill-group:hover { transform: translateY(-4px); background: rgba(255,255,255,0.06); }
+
+    .skill-group-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--accent-line);
+      padding-bottom: 0.6rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: #cdc4b0;
+      padding: 0.3rem 0.8rem;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tag:hover { background: rgba(201,168,76,0.22); color: var(--gold-light); }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--navy-mid); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover { transform: translateY(-6px); border-color: var(--gold); background: rgba(255,255,255,0.05); }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-icon {
+      font-size: 1.8rem;
+    }
+
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: #8a9bb0;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .project-impact {
+      font-size: 0.8rem;
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      margin-top: auto;
+    }
+
+    .project-link:hover { color: var(--gold); }
+
+    /* ── EDUCATION ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .edu-card {
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 1.4rem;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .edu-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.04); }
+
+    .edu-degree {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-institution {
+      font-size: 0.82rem;
+      color: var(--gold);
+    }
+
+    /* ── LANGUAGES ── */
+    .lang-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .lang-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 0.9rem 1.5rem;
+    }
+
+    .lang-name { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+    .lang-level { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--navy);
+      text-align: center;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--accent-line);
+      border-radius: 6px;
+      padding: 1.1rem 1.8rem;
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.9rem;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+
+    .contact-item:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); background: rgba(255,255,255,0.06); }
+
+    .contact-icon { font-size: 1.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--accent-line);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; padding-top: 6rem; }
+      #hero::after { display: none; }
+      .hero-stats { flex-direction: row; flex-wrap: wrap; }
+      .stat-card { flex: 1; min-width: 130px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">G. Donato</div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">São Paulo, Brazil · Open to opportunities</p>
+      <h1>Guilherme<br /><span>Donato</span></h1>
+      <p class="hero-title">Senior Data Analyst &amp; Analytics Strategist</p>
+      <p class="hero-bio">
+        Passionate about the intersection of technology, artificial intelligence, and business strategy.
+        I architect robust data ecosystems that translate complex analytical challenges into measurable outcomes —
+        bridging the gap between technical data engineering and C-level decision making.
+        Multilingual professional with global experience across Brazil and Australia.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get in Touch</a>
+        <a href="https://github.com/guidonatooo" target="_blank" class="btn-outline">View GitHub</a>
+        <a href="https://www.linkedin.com/in/gdonatomoraes/" target="_blank" class="btn-outline">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">25%</div>
+        <div class="stat-label">of dept. PLR secured via NPS/Churn framework at TOTVS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">96%</div>
+        <div class="stat-label">ML model accuracy achieved at Trax Retail image recognition</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15h+</div>
+        <div class="stat-label">Per week saved through automated reporting pipelines</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Languages spoken — PT, EN, ES, IT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Career Path</p>
+    <h2>Professional Experience</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="job-role">Senior Data Analyst</div>
+          <div class="job-company">TOTVS</div>
+          <div class="job-period">São Paulo, SP · Until January 2026</div>
+          <ul class="job-bullets">
+            <li>Designed and implemented a cross-analysis framework between NPS/CSAT and Churn data, identifying critical operational gaps across product lines.</li>
+            <li>This data product was directly responsible for <strong style="color:var(--gold)">25% of the entire department's PLR</strong> due to efficiency and retention improvements it enabled.</li>
+            <li>Developed complex SQL procedures and managed full data lifecycles to feed BI tools and predictive models at scale.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="job-role">Senior Customer Service Analyst</div>
+          <div class="job-company">Solenis</div>
+          <div class="job-period">São Paulo, SP · 2025</div>
+          <ul class="job-bullets">
+            <li>Oversaw and authorized procurement requests, system access, and critical transactions for the North America region, ensuring 100% alignment with corporate governance and compliance.</li>
+            <li>Identified operational bottlenecks and implemented streamlined approval workflows, significantly increasing processing speed and reducing error rates.</li>
+            <li>Leveraged Salesforce, SAP, Excel, and SQL to manage complex operations and automate manual workflows, enhancing data integrity across the department.</li>
+            <li>Partnered with Sales, Finance, and IT stakeholders to optimize end-to-end processes and drive global service efficiency.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="job-role">Data Specialist</div>
+          <div class="job-company">Trax Retail</div>
+          <div class="job-period">São Paulo, SP · 2022 – 2025</div>
+          <ul class="job-bullets">
+            <li>Conducted in-depth analysis of large-scale retail datasets, delivering actionable insights for global clients across multiple geographies.</li>
+            <li>Technical expert on image recognition technology — <strong style="color:var(--gold)">boosted ML model accuracy to 96%</strong> through advanced dataset monitoring and quality pipelines.</li>
+            <li>Bridged cultural and technical gaps in international environments, managing cross-functional teams and back-office capabilities.</li>
+            <li>Automated reporting pipelines using Python and SQL, <strong style="color:var(--gold)">saving the analysis team 15+ hours per week</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="job-role">Support Analyst N2</div>
+          <div class="job-company">3M Brazil</div>
+          <div class="job-period">São Paulo, SP · 2019 – 2020</div>
+          <ul class="job-bullets">
+            <li>Successfully executed the Win10 Project, migrating international ISOs with record efficiency across global teams.</li>
+            <li>Provided technical oversight for international conferences and managed global tickets via CenturyLink.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Capabilities</p>
+    <h2>Technical Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Languages &amp; Querying</div>
+        <div class="skill-tags">
+          <span class="tag">SQL · Advanced</span>
+          <span class="tag">Python</span>
+          <span class="tag">C</span>
+          <span class="tag">VBA / Excel Macros</span>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Data Analysis &amp; Visualization</div>
+        <div class="skill-tags">
+          <span class="tag">Tableau</span>
+          <span class="tag">Looker</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Excel · Expert</span>
+          <span class="tag">KPI Frameworks</span>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">ML &amp; Data Engineering</div>
+        <div class="skill-tags">
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">Seaborn</span>
+          <span class="tag">NPS / CSAT / Churn</span>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Process &amp; Automation</div>
+        <div class="skill-tags">
+          <span class="tag">CRM Management</span>
+          <span class="tag">Workflow Automation</span>
+          <span class="tag">Salesforce</span>
+          <span class="tag">SAP</span>
+          <span class="tag">Pipeline Automation</span>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Project &amp; Stakeholder Management</div>
+        <div class="skill-tags">
+          <span class="tag">JIRA</span>
+          <span class="tag">Monday.com</span>
+          <span class="tag">Microsoft Office Suite</span>
+          <span class="tag">Cross-functional Leadership</span>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="tag">Data-Driven Decision Making</span>
+          <span class="tag">Strategic Partnership</span>
+          <span class="tag">Multilingual Communication</span>
+          <span class="tag">International Experience</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Portfolio</p>
+    <h2>Projects &amp; Highlights</h2>
+    <div class="divider"></div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-in">
+        <div class="project-icon">💰</div>
+        <div class="project-name">Wise Wallet Decisions</div>
+        <div class="project-desc">Personal finance analytics application leveraging data pipelines and investment logic to support smarter financial decision-making. Applies ML-inspired heuristics to budget analysis.</div>
+        <div class="project-impact">📈 Investment Analysis · Personal Finance AI</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Data Analysis</span><span class="tag">Finance</span>
+        </div>
+        <a href="https://github.com/guidonatooo/wise-wallet-decisions" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-icon">🧠</div>
+        <div class="project-name">Numind Deep Focus Flow</div>
+        <div class="project-desc">AI-powered productivity and cognitive performance tracking system. Explores neural patterns and focus metrics to optimize deep work sessions using data-driven insights.</div>
+        <div class="project-impact">🤖 AI · Cognitive Analytics · Productivity Tech</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">AI</span><span class="tag">ML</span>
+        </div>
+        <a href="https://github.com/guidonatooo/numind-deep-focus-flow" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-icon">🐾</div>
+        <div class="project-name">Furry Friend Wellbeing</div>
+        <div class="project-desc">Data-driven platform for monitoring and analyzing pet health metrics. Demonstrates domain-agnostic analytical thinking applied to IoT-adjacent health tracking systems.</div>
+        <div class="project-impact">📊 Health Analytics · Data Pipeline Design</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Data Engineering</span><span class="tag">Analytics</span>
+        </div>
+        <a href="https://github.com/guidonatooo/furry-friend-wellbeing" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-icon">🏆</div>
+        <div class="project-name">FIAP Tech Challenges (1–4)</div>
+        <div class="project-desc">Series of end-to-end data science and analytics challenges from FIAP's postgraduate program. Covers real business problems across industries using SQL, Python, ML, and BI tools.</div>
+        <div class="project-impact">🎓 Academic · End-to-End Data Science</div>
+        <div class="project-tags">
+          <span class="tag">SQL</span><span class="tag">Python</span><span class="tag">ML</span><span class="tag">BI</span>
+        </div>
+        <a href="https://github.com/guidonatooo" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-icon">📊</div>
+        <div class="project-name">FIAP DATATHON</div>
+        <div class="project-desc">Competitive data science challenge requiring real-time exploratory analysis, hypothesis formulation, and model deployment under time constraints — simulating real corporate analytics sprints.</div>
+        <div class="project-impact">⚡ Competitive · Real-time Analytics Sprint</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">EDA</span><span class="tag">Modeling</span>
+        </div>
+        <a href="https://github.com/guidonatooo/FIAP---DATATHON" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-icon">🤖</div>
+        <div class="project-name">ASIMOV — AI Project</div>
+        <div class="project-desc">Exploration of AI architecture concepts and implementation, inspired by Isaac Asimov's vision of intelligent systems. Focuses on autonomous data-driven decision systems.</div>
+        <div class="project-impact">🔬 AI Research · Autonomous Systems</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">AI</span><span class="tag">Automation</span>
+        </div>
+        <a href="https://github.com/guidonatooo/ASIMOV" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Academic Background</p>
+    <h2>Education &amp; Certifications</h2>
+    <div class="divider"></div>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Bachelor of Information Technology &amp; Management</div>
+        <div class="edu-institution">UNIP — Brazil</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">CS50: Introduction to Computer Science</div>
+        <div class="edu-institution">Harvard University</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Data Analysis &amp; Scientific Computing with Python</div>
+        <div class="edu-institution">freeCodeCamp</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Certificate IV in Information Technology</div>
+        <div class="edu-institution">Danford College — Australia</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Certificate III in Business</div>
+        <div class="edu-institution">ILSC — Australia</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Investment Analysis</div>
+        <div class="edu-institution">AUVP Escola de Investimento</div>
+      </div>
+    </div>
+
+    <div class="lang-row">
+      <div class="lang-item fade-in">
+        <span style="font-size:1.3rem">🇧🇷</span>
+        <div><div class="lang-name">Portuguese</div><div class="lang-level">Native</div></div>
+      </div>
+      <div class="lang-item fade-in">
+        <span style="font-size:1.3rem">🇬🇧</span>
+        <div><div class="lang-name">English</div><div class="lang-level">Fluent</div></div>
+      </div>
+      <div class="lang-item fade-in">
+        <span style="font-size:1.3rem">🇪🇸</span>
+        <div><div class="lang-name">Spanish</div><div class="lang-level">Intermediate</div></div>
+      </div>
+      <div class="lang-item fade-in">
+        <span style="font-size:1.3rem">🇮🇹</span>
+        <div><div class="lang-name">Italian</div><div class="lang-level">Basic · EU Passport</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Let's Connect</p>
+    <h2>Get in Touch</h2>
+    <div class="divider" style="margin: 0 auto 1rem;"></div>
+    <p style="color:var(--muted); font-size:0.95rem; max-width:480px; margin:0 auto;">
+      Open to Senior Analytics, Data Strategy, and Analytics Manager roles. Available for global opportunities — Brazilian &amp; Italian passport holder.
+    </p>
+    <div class="contact-grid">
+      <a href="mailto:guidonatoo@gmail.com" class="contact-item">
+        <span class="contact-icon">✉️</span> guidonatoo@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/gdonatomoraes/" target="_blank" class="contact-item">
+        <span class="contact-icon">💼</span> LinkedIn Profile
+      </a>
+      <a href="https://github.com/guidonatooo" target="_blank" class="contact-item">
+        <span class="contact-icon">🐙</span> GitHub Portfolio
+      </a>
+      <a href="tel:+5519991848687" class="contact-item">
+        <span class="contact-icon">📞</span> +55 (19) 99184-8687
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Guilherme Donato Moraes da Silva Jardim · São Paulo, Brazil
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
